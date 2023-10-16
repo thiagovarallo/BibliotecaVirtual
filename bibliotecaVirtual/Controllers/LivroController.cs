@@ -1,4 +1,6 @@
-﻿using bibliotecaVirtual.Data;
+﻿using AutoMapper;
+using bibliotecaVirtual.Data;
+using bibliotecaVirtual.Data.DTOs;
 using bibliotecaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,28 +11,35 @@ namespace bibliotecaVirtual.Controllers
     public class LivroController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private IMapper _mapper;
 
-        public LivroController (AppDbContext context)
+
+
+        public LivroController (AppDbContext context , IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
+
         [HttpPost]
-        public ActionResult Create ( [FromBody] Livro livro )
+        public ActionResult Create ( [FromBody] CreateLivroDTO dto )
         {
-            if ( livro == null )
+            if ( dto == null )
             {
                 return BadRequest();
             }
+            Livro livro = _mapper.Map<Livro>( dto );
+
             _context.livro.Add( livro );
             _context.SaveChanges();
             return StatusCode(201, "Livro criado com sucesso" );
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Livro>> GetAll ()
+        public ActionResult<IEnumerable<Livro>> GetAll([FromQuery] int skip=0, [FromQuery] int take=25)
         {
-            var Livros = _context.livro.ToList();
+            var Livros = _context.livro.Skip(skip).Take(take).ToList();
             return Ok( Livros );
         }
 

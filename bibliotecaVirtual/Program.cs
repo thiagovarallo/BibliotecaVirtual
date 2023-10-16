@@ -17,6 +17,7 @@ namespace bibliotecaVirtual
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             //conection mysql
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseMySql(mysqlConnection, ServerVersion.AutoDetect(mysqlConnection)));
