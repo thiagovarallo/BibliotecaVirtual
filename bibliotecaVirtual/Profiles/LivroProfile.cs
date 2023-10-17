@@ -9,6 +9,7 @@ namespace bibliotecaVirtual.Profiles
         public LivroProfile() 
         {
             CreateMap<CreateLivroDTO, Livro>();
+            CreateMap<UpdateLivroDTO, Livro>();
         }
     }
 }

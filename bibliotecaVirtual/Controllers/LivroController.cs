@@ -33,7 +33,7 @@ namespace bibliotecaVirtual.Controllers
 
             _context.livro.Add( livro );
             _context.SaveChanges();
-            return StatusCode(201, "Livro criado com sucesso" );
+            return StatusCode(201, "Livro criado com sucesso. ID do livro: " + livro.Id);
         }
 
         [HttpGet]
@@ -73,6 +73,23 @@ namespace bibliotecaVirtual.Controllers
             _context.SaveChanges();
 
             return Ok("Livro Removido com sucesso");
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateLivroById (int id, UpdateLivroDTO dto)
+        {
+            if (dto is null || id is 0) { return BadRequest(); }
+
+            var livroUpdate = _context.livro.Find(id);
+
+            if (livroUpdate is null) { return NotFound("Livro não localizado"); }
+
+            _mapper.Map(dto, livroUpdate);
+            _context.SaveChanges();
+
+            return Ok("Atualizado com sucesso");
+
+
         }
     }
 }

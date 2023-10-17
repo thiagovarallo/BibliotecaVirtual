@@ -2,7 +2,7 @@
 
 namespace bibliotecaVirtual.Data.DTOs
 {
-    public class CreateLivroDTO
+    public class UpdateLivroDTO
     {
         [Required(ErrorMessage = "O Titulo não pode ser vazio")]
         [StringLength(120, ErrorMessage = "O Titulo deve ter no minimo 120 caracteres")]
@@ -13,7 +13,5 @@ namespace bibliotecaVirtual.Data.DTOs
         [Required(ErrorMessage = "O campo ano de publicação não pode ser fazio")]
         [Range(1, 2025, ErrorMessage = "O ano de publicação deve estar entre 1 à 2025")]
         public int AnoPublicacao { get; set; }
-        public string Editora { get; set; }
-        public string Genero { get; set; }
     }
 }
